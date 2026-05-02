@@ -1,0 +1,22 @@
+[
+  {
+    "email": "sara@notion.so",
+    "title": "Director of Revenue Operations",
+    "company": "Notion Labs",
+    "industry": "Productivity Software",
+    "employee_count": 800,
+    "country": "US",
+    "technologies": ["Salesforce", "Outreach"],
+    "recent_signals": ["Posted job opening for Sales Engineer"]
+  },
+  {
+    "email": "jake@tinybakery.com",
+    "title": "Owner",
+    "company": "Tiny Bakery",
+    "industry": "Food Service",
+    "employee_count": 8,
+    "country": "US",
+    "technologies": [],
+    "recent_signals": []
+  }
+]

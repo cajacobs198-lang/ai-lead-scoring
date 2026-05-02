@@ -1,0 +1,51 @@
+# Lead-scoring rule set. Each rule:
+#   - name: stable id used in audit logs
+#   - when: Python expression evaluated against the lead dict (safe subset)
+#   - weight: points added if `when` is true
+#   - reason: template string formatted with the lead dict (for explanations)
+
+rules:
+  - name: company_size_fit
+    when: "200 <= (employee_count or 0) <= 5000"
+    weight: 20
+    reason: "{employee_count} employees in [200, 5000]"
+
+  - name: company_size_too_small
+    when: "(employee_count or 0) < 50"
+    weight: -15
+    reason: "only {employee_count} employees (below floor)"
+
+  - name: icp_industry
+    when: "industry in ['SaaS', 'Productivity Software', 'Fintech', 'Marketing Technology']"
+    weight: 15
+    reason: "industry='{industry}' in target list"
+
+  - name: target_country
+    when: "country in ['US', 'CA', 'GB', 'AU']"
+    weight: 5
+    reason: "country={country} in target list"
+
+  - name: seniority
+    when: "any(t in (title or '') for t in ['VP', 'Director', 'Head of', 'Chief'])"
+    weight: 25
+    reason: "title contains decision-maker keyword"
+
+  - name: department_fit
+    when: "any(d in (title or '').lower() for d in ['revenue', 'sales', 'marketing', 'growth'])"
+    weight: 10
+    reason: "title in target department"
+
+  - name: tech_signal
+    when: "'Salesforce' in (technologies or [])"
+    weight: 8
+    reason: "already runs Salesforce (compatible stack)"
+
+llm:
+  enabled: true
+  fit_weight: 15
+  intent_weight: 20
+
+tiers:
+  A: 70
+  B: 50
+  C: 30
